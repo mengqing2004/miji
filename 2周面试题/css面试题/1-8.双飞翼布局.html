@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box{
+        padding-top: 200px;
+        overflow: hidden;
+    }
+    .item {
+      float: left;
+      color: #fff;
+      font-size: 20px;
+    }
+    .container {
+      width: 100%;
+      background-color: #ccc;
+    }
+    .content {
+      margin-left: 200px;
+      margin-right: 150px;
+      height: 200px;
+      background-color: green;
+    }
+    .left-item {
+      width: 200px;
+      margin-left: -100%;
+      background-color: red;
+    }
+    .right-item {
+      width: 150px;
+      margin-left: -150px;
+      background-color: blue;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <div class="container item">
+        <div class="content">主体内容</div>
+      </div>
+      <div class="left-item item">left-item</div>
+      <div class="right-item item">right-item</div>
+    </div>
+  </body>
+</html>

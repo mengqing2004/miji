@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .container {
+      overflow: hidden;
+      padding-left: 200px;
+      padding-right: 150px;
+      background-color: #ccc;
+    }
+    .item {
+      float: left; /*公共class添加浮动 */
+      color: #fff;
+      font-size: 20px;
+    }
+    .content {
+      width: 100%; 
+      /* 使内容随页面自适应 */
+      height: 200px;
+      background-color: green;
+    }
+    .left-item {
+      width: 200px;
+      margin-left: -100%; /* margin-left设置负值 */
+      position: relative; /* 相对定位 */
+      right: 200px;
+      background-color: red;
+    }
+    .right-item {
+      width: 150px;
+      margin-right: -150px;
+      /* 如果一个元素的右边距设置成负值,对其他元素来讲就认为这个元素的宽度减少了此负值 */
+      background-color: blue;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="content item">主体内容</div>
+      <div class="left-item item">左侧内容</div>
+      <div class="right-item item">右侧内容</div>
+    </div>
+  </body>
+</html>

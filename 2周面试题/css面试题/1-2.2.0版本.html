@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #p1 p{
+        color: red;
+    }
+    .span1{
+        color: blue;
+    }
+    .div1 .p1{
+        color: green !important;
+    }
+    body #div1 #p1{
+        color: yellow;
+    }
+
+</style>
+<body>
+    <div id="div1" class="div1">
+       <p id="p1" class="p1">测试文字222222
+        <span id="span1" class="span1">测试文字测试文字</span>
+       </p>
+    </div>
+</body>
+</html>

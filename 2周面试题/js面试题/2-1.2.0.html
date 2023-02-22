@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var a1 = 100;
+      let b1 = a1;
+      b1 = 200;
+      console.log(a1);
+
+      let a2 = {
+        age: 18,
+      };
+      let b2 = a2;
+      b2.age = 20;
+      console.log(a2);
+
+      const a = {
+        x: 100,
+        y: 200,
+      };
+      const b=a
+      let c=a.x
+      b.x=300
+      console.log(a);
+      c=500
+      console.log(a);
+    </script>
+  </body>
+</html>
