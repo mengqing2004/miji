@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        产生暂时性死区的原因(es6标准)
+        let/const会先被创建出来,但还未绑定值,所以不能用 
+        好习惯 :不要在let/const声明变量前使用变量,用了就触发暂时性死区
+        */
+
+        a=100
+        let a=100
+        // if(true){
+        //     a=100
+        //     let a=10
+        // }
+        // function fn(){
+        //     a=100
+        //     let  a=20;
+        // }
+        // function fn() {
+        //     a=100
+        //     let a=20
+        // }
+        // fn()
+        // for (let i = 0; i < 3; i++) {
+        //     a=100
+        //     let a=20
+            
+        // }
+        console.log(a);
+        //2.16.暂时性死区.html:17 Uncaught ReferenceError: Cannot access 'a' before initialization
+    </script>
+</body>
+</html>

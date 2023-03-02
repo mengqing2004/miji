@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">test</button>
+    <script>
+/*
+箭头函数中的this
+情况1:有function作用域的,this是上层作用域的this
+情况2:没有function作用域的,this是window
+*/
+// 案例一:obj1是new Obj 是有作用域的
+class Obj{
+    say=()=>{
+        console.log(this);
+    }
+}
+const obj1=new Obj()
+obj1.say() //输出Obj
+// 案例二:obj2是被定义出来的,没有作用域
+const obj2={
+    say:()=>{
+        console.log(this);
+    }
+}
+
+obj2.say()  //输出window
+
+
+
+// 案例三
+const oBtn=document.getElementById("btn")
+//有作用域
+// oBtn.onclick=function(){
+//     console.log(this); //输出<button id="btn">test</button>
+// }
+// 没有作用域
+// oBtn.onclick=()=>{
+//     console.log(this);// 输出window
+// }
+    </script>
+</body>
+</html>

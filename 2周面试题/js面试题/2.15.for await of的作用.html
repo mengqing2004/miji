@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function getPromise(num) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(num);
+          }, 500);
+        });
+      };
+      // (async function(){
+      //   const data=[10,20,30,40,50,60,70,80,90,100];
+      //   for(let val of data){
+      //       const res=await getPromise(val);
+      //       console.log(res);
+      //   }
+      // })();
+      const p1 = getPromise(10);
+      const p2 = getPromise(20);
+      const p3 = getPromise(30);
+      const list = [p1, p2, p3];
+      (async function () {
+        for await (let res of list) {
+          console.log(res);
+        }
+      })();
+
+      Promise.all(list).then((res)=>{
+        console.log(res);
+      })
+    </script>
+  </body>
+</html>

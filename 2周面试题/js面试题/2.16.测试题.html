@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <script>
+        //1
+        function fn() {
+            let a=10;
+            if(true){
+                let a=5;
+            }
+            console.log(a);//10
+        }
+        fn()
+        //2
+        var a=5;
+        if(true){
+            a=200;
+            let a=10;//触发了暂时性死域
+        }
+        console.log(a);//报错
+        //3
+        var a=5
+        if(true){
+            let a=10
+        }
+        console.log(a);//5
+        //4
+        function fn() {
+            console.log(a);//undefined
+            var a=10;
+        }
+        var a=5
+        fn();
+     </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // const arr =[1,2,[3,4,[5,6,[7,8]]]]
+      // const arr =[1,2,[3,4]]
+      // console.log(arr.flat());//输出1234  将一个复杂的数组变成一个简单的数组,就是数组拍平
+
+      //   const arr1=[10,20,30]
+      //   const arr2=[40,50]
+      //   const arr3=arr1.concat(arr2)//concat可以把数据或者数组直接拼到arr1里
+      //   console.log(arr3); //使用concat拼接两个数组
+
+      const arr = [1, 2, [3, 4]];
+        const res=flat(arr)
+        console.log(res);
+
+      function flat(arr) {
+        return Array.prototype.concat.apply([], arr);
+      }
+
+
+
+    </script>
+  </body>
+</html>

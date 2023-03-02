@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const arr = [100, 5, 3, 200, 6, 90];
+      console.log(getMax(arr));
+
+      // function getMax(arr){
+      //     // return Math.max(...arr)
+      //     return Math.max.apply(null,arr)
+      // }
+
+      // function getMax(arr){
+      //     arr.sort((n1,n2)=>{
+      //         return n2-n1
+      //     })
+      //     return arr[0]
+      // }
+
+      function getMax(arr) {
+        return arr.reduce((n1, n2) => {
+          return n1 > n2 ? n1 : n2;
+        });
+      }
+    </script>
+  </body>
+</html>

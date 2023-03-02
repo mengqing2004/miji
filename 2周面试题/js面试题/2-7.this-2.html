@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // call apply bind 中的this
+        // 情况1: this->window
+            // a.call()           window
+            // a.call(undefined)  window
+            // a.call(null)       window
+        // 情况2:传什么,this就是什么
+
+        function a() {
+            console.log(this);
+        }
+        a.call()
+        a.call(undefined)
+        a.call(null)
+        a.apply()
+        // 都是window
+
+        a.apply("abc")
+        a.call(123)
+        const fn = a.bind({x:100})
+        fn()
+    </script>
+</body>
+</html>

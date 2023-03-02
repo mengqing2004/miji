@@ -8,7 +8,7 @@
   </head>
   <body>
     <script>
-        // 类
+          // 类
       // 父类
       class Person {
         constructor(name, age) {
@@ -31,22 +31,21 @@
           );
         }
       }
-        //实例
+          //实例
       // 实例化
-      let zhangsan = new Student("张三", 18,"男");
+      let zhangsan = new Student("张三", 18, "男");
       console.log(zhangsan);
       zhangsan.sayHello();
       zhangsan.learn();
       console.log(zhangsan instanceof Student);
       console.log(zhangsan instanceof Person);
-      console.log(zhangsan instanceof Object);//所有原型的头头
+      console.log(zhangsan instanceof Object); //所有原型的头头
       console.log(zhangsan instanceof Array);
 
-// 原型 原型链
-console.log(zhangsan.__proto__); //隐式原型  实例
-console.log(Student.prototype);//显式原型    class/类
-console.log(zhangsan.__proto__===Student.prototype);
-
+      // 原型 原型链
+      console.log(zhangsan.__proto__); //隐式原型  实例
+      console.log(Student.prototype); //显式原型    class/类
+      console.log(zhangsan.__proto__ === Student.prototype);
     </script>
   </body>
 </html>

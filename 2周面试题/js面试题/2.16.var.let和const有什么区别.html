@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+         var 没有块级作用域
+        let const 块级作用域
+        */
+      //   for (var i = 0; i < 5; i++) {
+      //     console.log(i);
+      //   }
+
+      //   for (let i = 0; i < 5; i++) {
+      //     console.log(i);
+      //   }
+      //   console.log(i);//报错
+      //   if(true){
+      //     var i=5
+      //   }
+      //   console.log(i);
+      //   if (true) {
+      //     let i = 5;
+      //   }
+      //   console.log(i); //报错
+
+      /*
+      var 有变量提升 
+      let const没有变量提升
+      暂时性死区(temporal dead zong - TDZ)
+      */
+      //  var a;--变量提升
+      //    console.log(a);//undefined 
+      //    var a=10;
+
+
+        // console.log(a);//报错
+        // let a=10;
+
+        /*
+        var 可以重名
+        let const 不能重名
+        */
+    //    var a=5
+    //     var a=10
+    //     console.log(a);//10
+
+        // let a=2
+        // let a=5
+        // console.log(a);/报错
+        
+        // var a=5
+        // let a=10
+        // console.log(a);//报错
+    </script>
+  </body>
+</html>

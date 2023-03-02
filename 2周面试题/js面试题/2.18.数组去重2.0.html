@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const arr=[10,20,20,30,30,40,40,40,50,60]
+        console.log(unique(arr));
+        function unipue(arr){
+            const set=new Set(arr)
+            return [...set]
+        }
+
+        function unique(arr){
+            const res=[]
+            arr.forEach((item)=>{
+                if (res.indexOf(item)===-1) {
+                    res.push(item)
+                }
+            })
+            return res;
+        }
+    </script>
+</body>
+</html>

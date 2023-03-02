@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .div{
+        width: 200px;
+        height: 200px;
+        border: 5px solid red;
+    }
+</style>
+<body>
+
+    <h1>宏任务与微任务</h1></h1>
+    <div class="div"></div>
+</body>
+<script>
+console.log("start");  // 微任务
+setTimeout(()=>{
+    console.log("setTimeout"); //宏任务
+},0)
+Promise.resolve().then(()=>{
+    console.log("promise"); //微任务
+})
+console.log("end"); //微任务
+</script>
+</html>

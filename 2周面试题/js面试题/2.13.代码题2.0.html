@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+    // Promise.reject().then(()=>{
+    //   console.log(1);
+    // }).catch(()=>{
+    //   console.log(2);
+    // })
+
+    // Promise.resolve().then(()=>{
+    //   console.log(1);
+    // }).catch(()=>{
+    //   console.log(2);
+    // })
+
+    // Promise.resolve().then(()=>{
+    //   console.log(1);
+    // })
+    // .catch(()=>{
+    //   console.log(2);
+    // }).then(()=>{
+    //   console.log(3);
+    // })
+
+    // Promise.resolve().then(()=>{
+    //   console.log(1);
+    //   throw new Error()
+    // })
+    // .catch(()=>{
+    //   console.log(2);
+    // })
+    // .then(()=>{
+    //   console.log(3);
+    // })
+
+    // Promise.reject().then(()=>{
+    //   console.log(1);
+    // }).catch(()=>{
+    //   console.log(2);
+    // })
+    // .then(()=>{
+    //   console.log(3);
+    // })
+
+    // Promise.reject()
+    // .then(()=>{
+    //   console.log(1);
+    // }).catch(()=>{
+    //   console.log(2);
+    //   throw new Error()
+    // }).then(()=>{
+    //   console.log(3);
+    //   throw new Error()
+    // }).catch(()=>{
+    //   console.log(4);
+    // })
+
+    const res=async function fn(){
+      return 100;
+    }
+    res().then(()=>{
+      console.log(0);
+    }).catch(()=>{
+      console.log(1);
+    })
+
+    async function fn() {
+      return 100;
+    }
+
+
+    (async function () {
+      const a=fn()
+      const b=await fn()
+      console.log(a);
+      console.log(b);
+    })()
+
+    async function fn1(){
+      console.log("fn1 start");
+      await fn2()
+      console.log("fn1 end");
+    }
+    async function fn2() {
+      console.log("fn2 start");
+    }
+    console.log("start");
+    fn1()
+    console.log("end");
+    
+    </script>
+  </body>
+</html>

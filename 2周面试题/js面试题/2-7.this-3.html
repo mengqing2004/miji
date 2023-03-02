@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+// 定时器中的this
+// 情况1:定时器+function this->window
+// 情况2:定时器+箭头函数 this->上层作用域的this
+
+        // 情况1: 只要计时器里面是这种function,都输出window
+        // 案例一
+            // setTimeout(function () {
+            //     console.log(this); //输出 window
+            // },100)
+        // 案例二
+        // function fn() {
+        //     setTimeout(function(){
+        //         console.log(this);
+        //     },100)
+        // }
+        // fn.call({x:101})  //输出 window
+        // 案例三
+        // const a={
+        //     fn(){
+        //         setTimeout(function () {
+        //             console.log(this); //输出 window
+        //         },100)
+        //     }
+        // }
+        // a.fn()
+
+        // 情况2:
+// 案例一
+        // class Obj{
+        //     fn(){
+        //         setTimeout(()=>{
+        //             console.log(this);  //输出Obj
+        //         },100)
+        //     }
+        // }
+        // const o =new Obj()
+        // o.fn()
+//案例二
+        // function fn() {
+        //     setTimeout(()=>{
+        //         console.log(this); //输出{x:100}
+        //     },100)
+        // }
+
+        // fn.call({x:100})
+    </script>
+</body>
+</html>

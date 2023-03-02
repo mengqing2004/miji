@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Promise.reject()
+      // .then(()=>{
+      //     console.log(1);
+      // })
+      // .catch(()=>{
+      //     console.log(2); //输出2
+      // })
+
+      // Promise.resolve()
+      // .then(()=>{
+      //     console.log(1); //输出1
+      // })
+      // .catch(()=>{
+      //     console.log(2);
+      // })
+
+      /*
+            考点1
+            then和catch 内部没有 thrownew Error 相当于resolve
+        */
+
+      //   Promise.resolve()
+      //   .then(()=>{
+      //       console.log(1); //输出一和三
+      //   })
+      //   .catch(()=>{
+      //       console.log(2);
+      //   })
+      //   .then(()=>{
+      //       console.log(3);
+      //   })
+
+      // 变种二
+      //   Promise.resolve()
+      //   .then(()=>{
+      //       console.log(1);  //输出1,2,3
+      //       throw new Error()
+      //   })
+      //   .catch(()=>{
+      //       console.log(2);
+      //   })
+      //   .then(()=>{
+      //       console.log(3);
+      //   })
+
+      // 变种三
+      //   Promise.reject()
+      //   .then(()=>{
+      //       console.log(1);
+      //   })
+      //   .catch(()=>{
+      //     console.log(2); //输出2,3
+      //   })
+      //   .then(()=>{
+      //     console.log(3);
+      //   })
+
+      // 变种四
+      // Promise.reject()
+      // .then(()=>{
+      //     console.log(1);
+      // })
+      // .catch(()=>{
+      //     console.log(2);  //输出2和一个报错
+      //     throw new Error();
+      // })
+      // .then(()=>{
+      //     console.log(3);
+      // })
+      // // .catch(()=>{
+      // //     console.log(4); //加上这个catch,输出2,4
+      // // })
+
+      /*
+          考点2
+      async function => 相当于返回一个Promise.resolve
+      */
+
+      // 测试 相当于返回一个Promise.resolve
+      //  const res=async function fn(){
+      //     return 100;
+      //   }
+      //   res().then(()=>{
+      //     console.log(0); //输出零
+      //   }).catch(()=>{
+      //     console.log(1);
+      //   })
+
+      //   async function fn() {
+      //     return 100;
+      //   }
+
+      //   (async function () {
+      //     const a = fn();
+      //     const b = await fn();
+      //     console.log(a);
+      //     console.log(b);
+      //   })();
+
+      /*
+    考点三
+    await 代码执行顺序
+    */
+      //    async function fn1() {
+      //     console.log("fn1 start");
+      //     await fn2();
+      //     console.log("fn1 end"); //aeait 后面的代码都是异步
+      //    }
+      //    async function fn2(){
+      //     console.log("fn2 start");
+      //    }
+      //    console.log("start");
+      //    fn1()
+      //    console.log("end");
+
+      //变种1
+      // async function fn1(){
+      //     console.log("fn1 start");
+      //     await fn2()
+      //     console.log("fn1 end");;
+      //     await fn3()
+      //     console.log("fn3 end");
+      // }
+      // async function fn2(){
+      //     console.log("fn2");
+      // }
+      // async function fn3() {
+      //     console.log("fn3");
+      // }
+      // console.log("start");
+      // fn1()
+      // console.log("end");
+
+      /*
+    考点四
+    promise 与settimeout执行顺序
+    */
+
+      // console.log("start");
+      // setTimeout(()=>{
+      //     console.log("setTimeout");
+      // })
+      // Promise.resolve().then(()=>{
+      //     console.log("Promise");
+      // })
+      // console.log("end");
+
+      //变种1:
+      // async function fn1() {
+      //     console.log("fn1 start");
+      //     await fn2();
+      //     console.log("fn1 end");  //微任务 异步
+      // }
+      // async function fn2() {
+      //     console.log("fn2");
+      // }
+      // console.log("start");
+      // setTimeout(()=>{
+      //     console.log("settimeout"); //宏任务 异步
+      // })
+      // fn1()
+      // console.log("end");
+      Promise.reject()
+      .catch(() => {
+          console.log(4);
+          throw new Error(11111);
+        })
+        .catch(() => {
+          console.log(21);
+          // throw new Error();
+          // throw 'error';
+
+        })
+
+      Promise.resolve()
+        // .then(() => {
+        //   console.log(1); //输出1,2,3
+        //   throw new Error();
+        // })
+        .catch(() => {
+          console.log(2);
+          // throw new Error();
+        })
+        .then(() => {
+          console.log(3);
+          // throw new Error()
+        })
+
+    </script>
+  </body>
+</html>

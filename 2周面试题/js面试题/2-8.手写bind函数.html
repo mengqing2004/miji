@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 原生bind
+      //     function fn(a,b,c){
+      //         console.log(this);
+      //         console.log(a,b,c);
+      //         return "this is return"
+      //     }
+      //    const cb= fn .bind({x:200},1,2,3)
+      //    console.log(cb());
+
+      //    手写bind
+      Function.prototype.myBind = function () {
+        const fn = this;
+        // arguments是传进来的所有参数
+        // 是一个类数组
+        const arg = Array.prototype.slice.call(arguments);
+        const _this = arg.shift();
+        // const _this=arguments[0]
+        return function () {
+          return fn.apply(_this, arg);
+        };
+      };
+      const cb = fn.myBind({ x: 2100 }, 1, 2, 3, 4);
+
+      function fn(a, b, c,d) {
+        console.log(this);
+        console.log(a, b, c,d);
+        return "this is return";
+      }
+      console.log(cb());
+    </script>
+  </body>
+</html>

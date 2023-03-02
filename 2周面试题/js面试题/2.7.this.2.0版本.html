@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">text</button>
+    <script>
+      // "use strict"
+      // function a(){
+      //     console.log(this);//undefined
+      // }
+      // a()
+
+      // function a(){
+      //     console.log(this);
+      // }
+      // a. call()//undefined
+      // a.call(undefined)//undefined
+      // a.call(null)//null
+      // a.apply()//undefined
+      // //非严格模式下都是window
+
+      // a.apply("abc")//abc
+      // a.call(123)//123
+      // const fn=a.bind({x:100})//x:100
+      // fn()
+
+      //   setTimeout(function () {
+      //     console.log(this);//输出window
+      //   }, 100);
+      //   function fn() {
+      //     setTimeout(function () {
+      //       console.log(this);//输出window
+      //     }, 100);
+      //   }
+      //   fn.call(
+      //     { x: 101 } //输出window
+      //   );
+      //   const a = {
+      //     fn() {
+      //       setTimeout(function () {
+      //         console.log(this);//输出window
+      //       }, 1000);
+      //     },
+      //   };
+      //   a.fn();
+      // class Obj{
+      //     fn(){
+      //         setTimeout(()=>{
+      //             console.log(this); //输出Obj
+      //         },100)
+      //     }
+      // }
+    //   const o = new Obj()
+    //    o.fn()
+
+    //   function fn(){
+    //       setTimeout (()=>{
+    //           console.log(this); //输出x:100
+    //       },100)
+    //   }
+    //   fn.call({x:100})
+
+    //   class Obj {
+    //     say = () => {
+    //       console.log(this);  //输出obj
+    //     };
+    //   }
+    //   const obj1 = new Obj();
+    //   obj1.say();
+    //   const obj2 = {
+    //     say: () => {
+    //         console.log(this);//输出window
+    //     },
+    //   };
+    //   obj2.say()
+
+    //   const oBtn=document.getElementById("btn")
+    //   oBtn.onclick=function(){
+    //     console.log(this);//输出<button id="btn">test</button>
+    //   }
+    //   oBtn.onclick=()=>{
+    //     console.log(this);/ 输出window
+    //   }
+
+    // let obj={
+    //     x:123,
+    //     show(){
+    //         setTimeout(()=>{
+    //             console.log(this.x);
+    //         },100)
+    //     }
+    // }
+    // obj.show()//123
+    // obj.show.call({x:100})//100
+    </script>
+  </body>
+</html>
