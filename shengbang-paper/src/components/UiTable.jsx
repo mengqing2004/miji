@@ -80,7 +80,7 @@ const EditableCell = ({
                     },
                 ]}
             >
-                <InputNumber ref={inputRef} onPressEnter={save} onBlur={save}  />
+                <InputNumber ref={inputRef} onPressEnter={save} onBlur={save} min={1} />
             </Form.Item>
         ) : (
             <div
@@ -228,9 +228,7 @@ const UiTable = ({ columns }) => {
                     dataSource={dataSource}
                     // showHeader={false}
                     loading={paperStore.isLoading}
-                    pagination={{
-                        position: ["none", "none"],
-                    }}
+                    pagination={false}
                 />
             </SortableContext>
         </DndContext>

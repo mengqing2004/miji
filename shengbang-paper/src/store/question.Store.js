@@ -12,6 +12,9 @@ const defaultDrawerConfig = {
 class QuestionStore{
     isLoading=false;
     chapterId=-1;
+    subjectId=-1;
+    questionType=undefined
+    questionDifficulty=undefined
     questionList=[]
     questionDetail={}
     //管理抽屉的变量
@@ -27,11 +30,14 @@ class QuestionStore{
      * @returns {Promise<unknown>}
      */
 
-    getQuestionList(chapterId){
-        return run(this,questionApi.getQuestion({chapterId}))
+    getQuestionList(params){
+        this.subjectId=params.subjectId
+        return run(this,questionApi.getQuestion(params))
             .then((res)=>{
             runInAction(()=>{
-                this.chapterId=chapterId;
+                this.chapterId=params.chapterId;
+                this.questionType=params.questionType
+                this.questionDifficulty=params.questionDifficulty
                 this.questionList=res.data.list;
             })
         })
@@ -42,7 +48,7 @@ class QuestionStore{
      * @returns {*}
      */
 
-    getQuestionDetail=({questionId})=>{
+    getQuestionDetail=(questionId)=>{
         console.log(questionId,'1111111111')
         return run(this,questionApi.getQuestionList(questionId))
             .then((res)=>{
@@ -74,39 +80,41 @@ class QuestionStore{
 
 
     // 添加
-    addQuestion(params){
-        return run(this,questionApi.addQuestion(params)).then(()=>{
-            this.getQuestionList(this.chapterId).then(()=>{
-                runInAction(()=>{
-                    console.log(this.questionList, 'newData234234');
-                    //TODO 测试新增题目后列表渲染状态，后台接口写完删除
-                    // this.questionList.push({params})
-                    this.questionList.push({
-                        questionDifficulty: 1,
-                        questionId: "642234",
-                        questionName: "newnew",
-                        questionType: 2,
-                        updateTime: "2010-10-20 01:35:52",
-                        userNickName: "强强强强",
-                    });
-                })
-            })
+    addQuestion(data){
+        console.log(data,11112222)
+        return run(this, questionApi.addQuestion(data)).then(()=>{
+            const param={
+                subjectId:this.subjectId,
+                chapterId:this.chapterId,
+                questionType:this.questionType,
+                questionDifficulty:this.questionDifficulty,
+            }
+            this.getQuestionList(param);
         })
     }
 
-    putQuestion=(params)=>{
-        return run(this,questionApi.putQuestion(params)).then(()=>{
+    putQuestion=(data)=>{
+        console.log(data)
+        return run(this,questionApi.putQuestion(data)).then(()=>{
             this.setDrawerConfig(defaultDrawerConfig);
-            return this.getQuestionList(this.chapterId)
+            const searchParam = {
+                subjectId: this.subjectId,
+                chapterId: this.chapterId,
+                questionType: this.questionType,
+                questionDifficulty: this.questionDifficulty,
+            };
+
+            this.getQuestionList(searchParam)
+            // this.questionDetail(params.questionId)
         })
     }
 
-    siftQuestion=(chapterId,questionType,questionDifficulty)=>{
-        return run(this,questionApi.getQuestion({chapterId, questionType, questionDifficulty}))
+    siftQuestion=(params)=>{
+        return run(this,questionApi.getQuestion(params))
             .then((res)=> {
                 runInAction(() => {
                     console.log(res,'qqqqq')
-                    this.chapterId = chapterId;
+                    this.chapterId = params.chapterId;
                     this.questionList = res.data.list;
                 })
             })

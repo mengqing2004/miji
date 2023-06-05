@@ -25,8 +25,8 @@ export  const  encrypt=(value)=>{
  */
 import { runInAction } from "mobx";
 
-export const run=(_this,promise)=>{
-    if (!promise||!promise.then){
+export const run=(_this, promise)=>{
+    if (!promise|| !promise.then){
         throw new Error("run 必须传入Promise")
     }
 
@@ -36,7 +36,7 @@ export const run=(_this,promise)=>{
 
     return promise
         .then((res)=>{
-            if (res.code===200){
+            if (res.code === 200){
                 return res;
             }else {
                 return Promise.reject(res.message)

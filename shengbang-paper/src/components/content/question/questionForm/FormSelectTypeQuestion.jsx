@@ -3,6 +3,7 @@ import {useStore} from "@/store";
 import {observer} from "mobx-react-lite";
 import {Button, Form, Input, message, Select, Spin} from "antd";
 import {QuestionDictionary} from "@/config";
+import {useParams} from "react-router-dom";
 
 const difficultKeys = Object.keys(QuestionDictionary.difficult);
 
@@ -20,6 +21,7 @@ const formLayout = {
 };
 
 function FormSelectTypeQuestion() {
+    const {chapterId}=useParams()
     const {questionStore} = useStore();
     const {currentQuestionId} = questionStore.drawerConfig;
     const [formData, setFormData] = useState(null)
@@ -44,6 +46,8 @@ function FormSelectTypeQuestion() {
     const onFinish = (values) => {
         const submitData = {
             ...values,
+            chapterId,
+            questionType:4,
             questionOptions: {A: ""},
             questionAnswer: [values.questionAnswer],
         }
@@ -125,12 +129,6 @@ function FormSelectTypeQuestion() {
                     <Form.Item
                         name={`questionExplain`}
                         label={`答案解析`}
-                        rules={[
-                            {
-                                required: true,
-                                message: "请填写答案解析",
-                            },
-                        ]}
                     >
                         <Input.TextArea allowClear showCount placeholder="请输入答案解析"/>
                     </Form.Item>

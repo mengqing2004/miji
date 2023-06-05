@@ -26,8 +26,6 @@ const EditableCell = ({
     const [editing, setEditing] = useState(false);
     const inputRef = useRef(null);
     const form = useContext(EditableContext);
-    // const {run:chapterRun,isLoading:chapterLoading, data:chapterList}=useAsync()
-    // const {run:subjectRun,isLoading:subjectLoading, data:subjectList}=useAsync()
     useEffect(() => {
         if (editing) {
             inputRef.current.focus();
@@ -48,17 +46,6 @@ const EditableCell = ({
                 ...record,
                 ...values,
             });
-            //修改命名 请求后台数据
-            // record.subjectId?
-            //     subjectRun(
-            //         subjectApi.putSubject({
-            //             subjectId:record.subjectId,subjectName:record.subjectName
-            //         }))
-            //     :chapterRun(
-            //         subjectApi.putChapters({
-            //             chapterId:record.chapterId,chapterName:record.chapterName
-            //         }))
-
         } catch (errInfo) {
             console.log("Save failed:", errInfo);
         }
@@ -121,7 +108,7 @@ const Row = ({ children, index, ...props }) => {
         ...(isDragging
             ? {
                 position: "relative",
-                zIndex: 9999,
+                zIndex: 100,
             }
             : {}),
     };
@@ -155,13 +142,14 @@ const Row = ({ children, index, ...props }) => {
         </Form>
     );
 };
-const UiDragTable = ({ loading, data, columns, handleDragEnd }) => {
+const UiDragTable = ({ loading, data, columns, handleDragEnd,handleRename }) => {
     const [dataSource, setDataSource] = useState(data);
 
     useEffect(() => {
         setDataSource(data);
     }, [data]);
 
+    //重命名
     const handleSave = (row) => {
         const newData = [...dataSource];
         const index = newData.findIndex((item) => row.orderId === item.orderId);
@@ -171,6 +159,7 @@ const UiDragTable = ({ loading, data, columns, handleDragEnd }) => {
             ...row,
         });
         setDataSource(newData);
+        handleRename && handleRename(row)
     };
 
     const columns2 = columns.map((col) => {
@@ -195,36 +184,39 @@ const UiDragTable = ({ loading, data, columns, handleDragEnd }) => {
                 const activeIndex = previous.findIndex((i) => i.orderId === active.id);
                 const overIndex = previous.findIndex((i) => i.orderId === over?.id);
                 const res = arrayMove(previous, activeIndex, overIndex);
-                handleDragEnd(res);
+                handleDragEnd&&handleDragEnd(res);
                 return res;
             });
         }
     };
 
     return (
-        <DndContext onDragEnd={onDragEnd}>
-            <SortableContext
-                items={dataSource.map((i) => i.orderId)}
-                strategy={verticalListSortingStrategy}
-            >
-                <Table
-                    components={{
-                        body: {
-                            row: Row,
-                            cell: EditableCell,
-                        },
-                    }}
-                    rowKey="orderId"
-                    columns={columns2}
-                    dataSource={dataSource}
-                    showHeader={false}
-                    loading={loading}
-                    pagination={{
-                        position: ["none", "none"],
-                    }}
-                />
-            </SortableContext>
-        </DndContext>
+        <>
+            <DndContext onDragEnd={onDragEnd}>
+                <SortableContext
+                    items={dataSource.map((i) => i.orderId)}
+                    strategy={verticalListSortingStrategy}
+                >
+                        <Table
+                            components={{
+                                body: {
+                                    row: Row,
+                                    cell: EditableCell,
+                                },
+                            }}
+                            rowKey="orderId"
+                            columns={columns2}
+                            dataSource={dataSource}
+                            showHeader={false}
+                            loading={loading}
+                            pagination={false}
+                            // pagination={{
+                            //     position: ["none", "none"],
+                            // }}
+                        />
+                </SortableContext>
+            </DndContext>
+        </>
     );
 };
 export default UiDragTable;

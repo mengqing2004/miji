@@ -19,18 +19,18 @@ export const removeQuestion=(params)=>{
         method:"DELETE",
     });
 };
-export const addQuestion = (params) => {
+export const addQuestion = (data) => {
     return http({
         url: "/private/question",
-        method: "POST",
-        params,
+        method: "post",
+        data,
     });
 };
-export const putQuestion = (params) => {
+export const putQuestion = (data) => {
     return http({
         url: `/private/question`,
         method: "PUT",
-        params,
+        data,
     });
 };
 

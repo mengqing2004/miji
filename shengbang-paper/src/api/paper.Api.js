@@ -21,19 +21,19 @@ export const removePaper=(params)=>{
     })
 }
 
-export const addPaper=(params)=>{
+export const addPaper=(data)=>{
     return http({
         url:`/private/paper`,
         method:"POST",
-        params,
+        data,
     })
 }
 
-export const putPaper=(params)=>{
+export const putPaper=(data)=>{
     return http({
         url:`/private/paper`,
         method:"PUT",
-        params,
+        data,
     })
 }
 

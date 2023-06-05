@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import { Button, Form, Input, Select, Radio, Spin, message } from "antd";
 import { observer } from "mobx-react-lite";
 import {QuestionDictionary} from '@/config'
+import {useParams} from "react-router-dom";
 const difficultKeys =Object.keys(QuestionDictionary.difficult);
 
 const formLayout = {
@@ -20,20 +21,20 @@ const formLayout = {
 
 // 单选表单
 function FormSelectTypeRadio() {
+    const {chapterId}=useParams()
     const { questionStore } = useStore();
     const { currentQuestionId } = questionStore.drawerConfig
     const [formData, setFormData] = useState(null);
     const [, contextHolder] = message.useMessage();
-
     useEffect(()=>{
-        if (currentQuestionId!==-1){
+        if (currentQuestionId!=-1){
             // 如果不等于-1,则是修改程序
             questionStore.getQuestionDetail(currentQuestionId).then(()=>{
                 const {questionDetail}=questionStore;
 
                 setFormData({
                     ...questionDetail,
-                    questionDifficuly:questionDetail.questionDifficuly+"",
+                    questionDifficulty:questionDetail.questionDifficulty+"",
                     optionA:questionDetail.questionOptions.A,
                     optionB:questionDetail.questionOptions.B,
                     optionC:questionDetail.questionOptions.C,
@@ -46,8 +47,11 @@ function FormSelectTypeRadio() {
     },[])
 
     const onFinish=(values)=>{
+        // console.log(values,'values',chapterId)
         const submitData={
-            ...values,
+            // ...values,
+            chapterId,
+            questionType:1,
             questionOptions: {
                 A:values.optionA,
                 B:values.optionB,
@@ -55,11 +59,16 @@ function FormSelectTypeRadio() {
                 D:values.optionD,
             },
             questionAnswer: [values.questionAnswer],
+            questionDifficulty:parseInt(values.questionDifficulty),
+            questionExplain:values.questionExplain?values.questionExplain:null,
+            questionName:values.questionName,
         }
         console.log(submitData)
 
-        if (currentQuestionId !=-1){
+        if (currentQuestionId != -1){
             submitData.questionId=currentQuestionId;
+            // submitData.questionId=currentQuestionId.questionId;
+            // console.log(currentQuestionId,submitData.questionId)
             questionStore.putQuestion(submitData).then(()=>{
                 message.success("修改成功");
             })
@@ -68,6 +77,7 @@ function FormSelectTypeRadio() {
             questionStore.addQuestion(submitData).then(()=>{
                 message.success("添加成功")
             })
+
         }
     }
     return (
@@ -192,12 +202,6 @@ function FormSelectTypeRadio() {
                     <Form.Item
                         name={`questionExplain`}
                         label={`答案解析`}
-                        rules={[
-                            {
-                                required: true,
-                                message: "请填写答案解析",
-                            },
-                        ]}
                     >
                         <Input.TextArea allowClear showCount placeholder="请输入答案解析" />
                     </Form.Item>

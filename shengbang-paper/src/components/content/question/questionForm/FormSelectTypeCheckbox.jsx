@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import {Button, Form, Input, Select, Radio, Spin, message, Checkbox} from "antd";
 import { observer } from "mobx-react-lite";
 import {QuestionDictionary} from '@/config'
+import {useParams} from "react-router-dom";
 const difficultKeys =Object.keys(QuestionDictionary.difficult);
 
 const formLayout = {
@@ -20,11 +21,11 @@ const formLayout = {
 
 // 多选表单
 function FormSelectTypeCheckbox() {
+    const {chapterId}=useParams()
     const { questionStore } = useStore();
     const { currentQuestionId } = questionStore.drawerConfig
     const [formData, setFormData] = useState(null);
     const [, contextHolder] = message.useMessage();
-
     useEffect(()=>{
         if (currentQuestionId!==-1){
             // 如果不等于-1,则是修改程序
@@ -48,17 +49,19 @@ function FormSelectTypeCheckbox() {
     const onFinish=(values)=>{
         const submitData={
             ...values,
+            chapterId,
+            questionType:2,
             questionOptions: {
                 A:values.optionA,
                 B:values.optionB,
                 C:values.optionC,
                 D:values.optionD,
             },
-            questionAnswer: [values.questionAnswer],
+            questionAnswer: [...values.questionAnswer],
         }
         console.log(submitData)
 
-        if (currentQuestionId !=-1){
+        if (currentQuestionId !==-1){
             submitData.questionId=currentQuestionId;
             questionStore.putQuestion(submitData).then(()=>{
                 message.success("修改成功");
@@ -192,12 +195,6 @@ function FormSelectTypeCheckbox() {
                     <Form.Item
                         name={`questionExplain`}
                         label={`答案解析`}
-                        rules={[
-                            {
-                                required: true,
-                                message: "请填写答案解析",
-                            },
-                        ]}
                     >
                         <Input.TextArea allowClear showCount placeholder="请输入答案解析" />
                     </Form.Item>

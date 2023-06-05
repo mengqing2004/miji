@@ -28,7 +28,7 @@ const columns=({onDelete,onEdit}) => [
     },
     {
         title: '修改者',
-        dataIndex: 'userNickName',
+        dataIndex: 'nickName',
     },
     {
         title: '修改时间',
@@ -66,14 +66,15 @@ function QuestionTable() {
     const questionDifficulty=searchParams.get('questionDifficulty')
 
     const {chapterId}=useParams()
+    const subjectId=searchParams.get('subjectId')
     const {questionStore}=useStore();
     const {questionList,isLoading}=questionStore;
 
     useEffect(()=>{
         if (questionType||questionDifficulty){
-                questionStore.siftQuestion(chapterId,questionType,questionDifficulty)
+                questionStore.siftQuestion({subjectId,chapterId, questionType, questionDifficulty})
         }else {
-            questionStore.getQuestionList(chapterId)
+            questionStore.getQuestionList({subjectId,chapterId})
         }
     },[chapterId,questionType,questionDifficulty])
 
@@ -82,9 +83,10 @@ function QuestionTable() {
         questionStore.deleteQuestion(questionId)
     }
 
-    const onEdit=(questionId,questionType)=>{
+    const onEdit=(question,questionType)=>{
+        console.log(question,'111222333')
         questionStore.setDrawerConfig({
-            currentQuestionId: questionId,
+            currentQuestionId: question.questionId,
             currentQuestionType: questionType,
             open:true,
             title:"编辑题目",

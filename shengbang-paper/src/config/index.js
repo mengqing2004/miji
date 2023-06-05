@@ -1,6 +1,9 @@
 import md5 from "md5";
-
-export const DevBaseURL = "http://127.0.0.1:4523/m1/2576757-0-default";
+// wechat.qhdboyi.com:9021
+export const DevBaseURL = "http://wechat.qhdboyi.com:9021";
+// export const DevBaseURL = "http://192.168.95.158:8155";
+// export const DevBaseURL = "http://192.168.0.129:8155";
+// export const DevBaseURL = "http://127.0.0.1:4523/m1/2576757-0-default";
 export const ProdBaseURL = "https://online.xxx";
 export const TokenKey = md5("userToken").slice(0, 5);
 export const EncryptSalt = "shengbang";

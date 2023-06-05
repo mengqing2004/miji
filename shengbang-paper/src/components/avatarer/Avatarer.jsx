@@ -10,7 +10,7 @@ function Avatarer() {
     return (
         <Space direction="vertical" size={14}>
             <Space wrap size={14}>
-                <Avatar src={avatar} size={64} icon={<UserOutlined />} />
+                <Avatar src={avatar} size={50} icon={<UserOutlined />} />
             </Space>
         </Space>
     );

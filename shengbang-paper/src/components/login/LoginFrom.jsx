@@ -38,16 +38,16 @@ function LoginFrom() {
     //     })
     // };
     return (
-        <div>
+        <div className={`w-[450px] mx-auto`}>
             {/*TODO 测试换将使用，真实环境删除*/}
-            <button
-                className={`fixed top-0 left-0 border p-2`}
-                onClick={() =>
-                    onFinish({ username: "13312341234", password: "123456" })
-                }
-            >
-                一键登录
-            </button>
+            {/*<button*/}
+            {/*    className={`fixed top-0 left-0 border p-2`}*/}
+            {/*    onClick={() =>*/}
+            {/*        onFinish({ username: "13312341234", password: "123456" })*/}
+            {/*    }*/}
+            {/*>*/}
+            {/*    一键登录*/}
+            {/*</button>*/}
             {contextHolder}
             <Form
                 form={form}

@@ -9,25 +9,41 @@ import UiDargNav from "@/components/UiDargNav.jsx";
 import useAsync from "@/hooks/useAsync.js";
 import {subjectApi} from "@/api/index.js";
 import {v4 as uuid} from 'uuid'
+import {useStore} from "@/store/index.js";
+import {arrayMove} from "@dnd-kit/sortable";
 
-function SubjectList(props) {
-    const {run:subjectRun,isLoading:subjectLoading, data:subjectList,setData}=useAsync()
-    const {run:newListRun}=useAsync()
-    const {run:removeSubjectList}=useAsync()
+function SubjectList() {
+   const {subjectStore}=useStore()
     useEffect(()=>{
-        subjectRun(subjectApi.getSubjects())
+        subjectStore.getSubjectsList()
     },[])
-
-    const [dataSource, setDataSource] = useState(subjectList?.list || []);
-    useEffect(()=>{
-        setDataSource(subjectList?.list || [])
-        props.subjectsList(subjectList?.list || [])
-    },[subjectList])
-    // useEffect(()=>{
-    //
-    // },[dataSource])
-
     const params = useParams();
+
+    const onDragEnd = (subjectList) => {
+        console.log(subjectList, "拖拽排序结束");
+        subjectStore.sortSubjeft(subjectList)
+    };
+    const onRename = (subjectList) => {
+        console.log(subjectList, "修改命名");
+        subjectStore.renameSubject({
+            subjectId:subjectList.subjectId,
+            subjectName:subjectList.subjectName
+        })
+
+    };
+
+    const confirm = (subjectId) => {
+        subjectStore.deleteSubject(subjectId)
+    };
+
+
+    const navTitle='科目'
+    const isButton='true'
+    const newList=(subjectName)=>{
+        subjectStore.addSubject(subjectName)
+        console.log('新建'+navTitle,subjectName)
+    }
+
     const columns = [
         {
             key: "sort",
@@ -37,15 +53,8 @@ function SubjectList(props) {
             editable: true,
             dataIndex: "subjectName",
             render: (text, record) => (
-                <NavLink to={`/subject/${record.subjectId}`}
-                         className={({ isActive }) =>
-                             {
-                                 isActive && `text-blue-500`
-                             }
-                         }
-                >
+                <Link to={`/subject/${record.subjectId}`}>
                     <p
-                        // onClick={()=>()}
                         className={`flex-grow truncate py-2 ${
                             params.subjectId === record.subjectId
                                 ? `text-blue-500 font-medium`
@@ -54,7 +63,7 @@ function SubjectList(props) {
                     >
                         {text}
                     </p>
-                </NavLink>
+                </Link>
             ),
         },
         {
@@ -78,41 +87,6 @@ function SubjectList(props) {
         },
     ];
 
-    const onDragEnd = (subjectList) => {
-        console.log(subjectList, "拖拽排序结束");
-    };
-    const confirm = (subjectId) => {
-        removeSubjectList(subjectApi.removeSubject(subjectId))
-            .then(()=>{
-                setData({
-                    list:dataSource.filter((item)=>{
-                        return item.subjectId!==subjectId
-                    })
-                })
-                message.success('删除成功')
-            })
-            .catch(()=>{
-                message.success('删除失败');
-            })
-    };
-
-
-    const navTitle='科目'
-    const isButton='true'
-    const newList=(subjectName)=>{
-        const newData={
-            allowDelete: 0,
-            orderId: uuid(),
-            subjectId: "88",
-            subjectName: subjectName,
-            updateTime: "1681235483"
-        }
-        setDataSource([...dataSource,newData])
-        newListRun(subjectApi.postSubject({subjectName:subjectName, orderId:1, last:1}))
-        console.log('新建'+navTitle,subjectName)
-        message.success('添加'+navTitle+'成功');
-    }
-
     return (
         <div className={`flex flex-col h-full`}>
             <div className={`flex-shrink-0`}>
@@ -121,10 +95,11 @@ function SubjectList(props) {
             <div className={`flex-grow h-full`}>
                 <UiScrollContent>
                     <UiDargTable
-                        data={dataSource}
+                        data={subjectStore.subjectsList}
                         columns={columns}
                         handleDragEnd={onDragEnd}
-                        loading={subjectLoading}
+                        loading={subjectStore.isLoading}
+                        handleRename={onRename}
                     />
                 </UiScrollContent>
             </div>

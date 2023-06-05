@@ -18,7 +18,7 @@ export const exportPDF = async (title, ele) => {
     canvas.width = width * scale;
     canvas.height = height * scale;
     var contentWidth = canvas.width;
-    var contentHeight = canvas.height;
+    const contentHeight = canvas.height;
 
 //一页pdf显示html页面生成的canvas高度;
     var pageHeight = (contentWidth / 592.28) * 841.89;
@@ -28,7 +28,7 @@ export const exportPDF = async (title, ele) => {
     var position = 0;
 //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
     var imgWidth = 595.28;
-    var imgHeight = (592.28 / contentWidth) * contentHeight;
+    var imgHeight = (590 / contentWidth) * contentHeight;
     const pdfCanvas = await html2canvas(ele, {
         useCORS: true,
         canvas,
@@ -58,9 +58,19 @@ export const exportPDF = async (title, ele) => {
             pdf.addImage(imgDataUrl, "png", 0, position, imgWidth, imgHeight);
             leftHeight -= pageHeight;
             position -= 841.89;
+
 //避免添加空白页
             if (leftHeight > 0) {
+
                 pdf.addPage();
+                // addPageFooter = (item,currentPage,diff,isLastest) => {
+                //     let pageFooter = document.createElement("div");
+                //     pageFooter.className = "c-page-foot";
+                //     pageFooter.innerHTML = "第 "+ currentPage +" 页 ";
+                //     isLastest?item.parentNode.insertBefore(pageFooter,null):item.parentNode.insertBefore(pageFooter,item);
+                //     pageFooter.style.marginTop = diff+"px";
+                //     pageFooter.style.marginBottom = "10px";
+                // }
             }
         }
     }

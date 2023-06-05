@@ -92,7 +92,7 @@ function SearchBar() {
                         loading={chapterStore.isLoading}
                         placeholder={`选择章节`}
                         disabled={searchParams.get("subjectId")==null||subjectStore.isLoading||chapterStore.isLoading||questionStore.isLoading}
-                        value={
+                        defaultValue={
                             searchParams.get("chapterId")?
                             parseInt(searchParams.get("chapterId")):
                             undefined

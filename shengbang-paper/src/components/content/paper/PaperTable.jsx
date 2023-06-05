@@ -38,9 +38,9 @@ const columns = ({onDelete, onEdit, onDownload}) => [
         render: (record) =>
             <div className={`flex space-x-2 flex items-center`}>
                 {/*TODO 修改删除下载按钮*/}
-                <a>
-                    <DownloadOutlined onClick={() => onDownload(record)}/>
-                </a>
+                {/*<a>*/}
+                {/*    <DownloadOutlined onClick={() => onDownload(record)}/>*/}
+                {/*</a>*/}
                 <a>
                     <FormOutlined onClick={() => onEdit(record)}/>
                 </a>

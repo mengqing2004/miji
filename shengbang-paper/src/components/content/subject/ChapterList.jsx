@@ -11,22 +11,21 @@ import UiScrollContent from "@/components/UiScrollContent.jsx";
 import useAsync from "@/hooks/useAsync.js";
 import {subjectApi} from "@/api/index.js";
 import CreateNewList from "@/components/content/subject/CreateNewList.jsx";
+import {observer} from "mobx-react-lite";
 
 
-
-function ChapterList(props) {
-    const {run:chapterRun,isLoading:chapterLoading, data:chapterList,setData}=useAsync()
-    const {run:removeChapterList}=useAsync()
+function ChapterList() {
     const params = useParams();
     const subjectId=params.subjectId || 0
 
-    const [dataSource, setDataSource] = useState(chapterList?.list || []);
+    const {chapterStore}=useStore()
+    const { chapterList, isLoading } = chapterStore;
+    // const {chapterList,setChapterList}=useState([])
+
     useEffect(()=>{
-            chapterRun(subjectApi.getChapters(subjectId))
-    },[subjectId])
-    useEffect(()=>{
-        setDataSource(chapterList?.list || [])
-    },[chapterList])
+        chapterStore.getChapterList(params.subjectId)
+    },[params,params.subjectId])
+
 
     //表头
     const columns = [
@@ -48,7 +47,7 @@ function ChapterList(props) {
             width: 50,
             render: (text, record) =>
                 record.allowDelete === 1 &&(
-                    <p id={record.subjectId} className={`flex items-center justify-center text-gray-500`}>
+                    <p className={`flex items-center justify-center text-gray-500`}>
                         <Popconfirm
                             title="是否删除?"
                             description="你真的要删除它吗?"
@@ -68,44 +67,46 @@ function ChapterList(props) {
     //移动
     const onDragEnd = (chapterList) => {
         console.log(chapterList, 877);
+        chapterStore.sortChapter(chapterList)
     };
     //删除
 
 
-    const confirm = (chapterId) => {
-        //删除按钮
-        removeChapterList(subjectApi.removeChapters(chapterId))
-            .then(()=>{
-                setData({
-                    list:dataSource.filter((item)=>{
-                        return item.chapterId !==chapterId;
-                    })
-                })
-                message.success('删除成功');
 
-            })
-            .catch(()=>{
-                message.success('删除失败');
-            })
-    };
     //新建
-    const {run:newListRun}=useAsync()
     const navTitle='章节';
     const newList=(chapterName)=>{
-        const newData={
-            allowDelete: 1,
-            orderId: 36,
-            chapterId: "88",
-            chapterName: chapterName,
-            updateTime: "1681235483"
-        }
-        setDataSource([...dataSource,newData])
-        newListRun(subjectApi.postChapters({subjectId:params,chapterName:chapterName, orderId:1, last:1}))
-        console.log('新建'+navTitle,chapterName,'11111')
-        message.success('添加'+navTitle+'成功');
+        chapterStore.addChapter(chapterName)
+    console.log('新建'+navTitle,chapterName,'11111')
     }
 
 
+    const confirm = (chapterId) => {
+        chapterStore.deleteChapter(chapterId)
+        //删除按钮
+        // removeChapterList(subjectApi.removeChapters(chapterId))
+        //     .then(()=>{
+        //         setData({
+        //             list:dataSource.filter((item)=>{
+        //                 return item.chapterId !==chapterId;
+        //             })
+        //         })
+        //         message.success('删除成功');
+        //
+        //     })
+        //     .catch(()=>{
+        //         message.success('删除失败');
+        //     })
+    };
+
+    const onRename = (row) => {
+        console.log(row, "修改命名");
+        chapterStore.renameChapter({
+            chapterId:row.chapterId,
+            chapterName:row.chapterName
+        })
+
+    };
     return (
             <div className={`flex flex-col w-full -mt-8  space-y-5 h-full`}>
                 <div className={`text-right pr-4  -mt-5  flex-shrink-0`}>
@@ -114,10 +115,11 @@ function ChapterList(props) {
                 <div className={`flex-grow h-full`}>
                     <UiScrollContent>
                         <UiDargTable
-                            loading={chapterLoading}
-                            data={dataSource}
+                            data={chapterList||[]}
                             columns={columns}
                             handleDragEnd={onDragEnd}
+                            loading={isLoading}
+                            handleRename={onRename}
                         />
                     </UiScrollContent>
                 </div>
@@ -125,4 +127,4 @@ function ChapterList(props) {
     );
 }
 
-export default ChapterList;
+export default observer(ChapterList);

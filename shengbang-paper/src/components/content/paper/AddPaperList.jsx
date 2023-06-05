@@ -34,7 +34,7 @@ function AddPaperList() {
             message.error("请选择试卷所属科目", duration)
             return false;
         }
-        if (newPaperData.paperName.length === 0) {
+        if (newPaperData.paperName.length === 0 ||newPaperData.paperName===''||newPaperData.paperName==null) {
             message.error("试卷名称不能为空", duration)
             return false;
         }
@@ -130,9 +130,10 @@ function AddPaperList() {
                 <div className={`flex justify-between items-center pr-4 space-x-4`}>
                     <UiDargNav navTitle={searchParams.get("paperId") ? `编辑试卷` : `添加试卷`}/>
                     {/*<Link to={'/paper/random'}>*/}
-                    <Button type="primary" onClick={showModal}>
-                        获取随机试题
-                    </Button>
+                    {/*TODO 随机试题*/}
+                    {/*<Button type="primary" onClick={showModal}>*/}
+                    {/*    获取随机试题*/}
+                    {/*</Button>*/}
                     {/*</Link>*/}
                     <Button type="primary" onClick={savePaper}>
                         发布试卷
