@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, NavLink, useParams, useSearchParams} from "react-router-dom";
+import {Link, NavLink, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import { Button, message, Popconfirm} from "antd";
 import {DeleteOutlined} from "@ant-design/icons";
 import {observer} from "mobx-react-lite";
@@ -32,9 +32,16 @@ function SubjectList() {
         })
 
     };
-
+    const navigate = useNavigate();
     const confirm = (subjectId) => {
         subjectStore.deleteSubject(subjectId)
+        if (parseInt(params.subjectId)===parseInt(subjectId)){
+            navigate("/subject");
+
+            // searchParams.delete("subjectName")
+            // setSearchParams(searchParams)
+            // params.subjectId=null
+        }
     };
 
 
