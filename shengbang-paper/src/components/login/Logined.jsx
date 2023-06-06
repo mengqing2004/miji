@@ -8,7 +8,6 @@ function Logined() {
     const [messageApi, contextHolder] = message.useMessage()
     const navigate = useNavigate();
     const { userStore } = useStore();
-    const { nickname } = userStore.userInfo;
     const [loading, setLoading] = useState(false);
     function proving (){
         setLoading(true)
@@ -45,7 +44,7 @@ function Logined() {
                     </div>
                 </button>
 
-            <p className={`text-sm pt-2`}>欢迎 {nickname}</p>
+            <p className={`text-sm pt-2`}>欢迎 {userStore.userInfo.nickName}</p>
 
             <p className={`py-8 font-bold text-lg `}>点击头像可继续使用该账户</p>
             <Button
@@ -54,7 +53,7 @@ function Logined() {
                 onClick={remove}
                 loading={loading}
             >
-                切换账号
+                注销登录
             </Button>
         </div>
     );

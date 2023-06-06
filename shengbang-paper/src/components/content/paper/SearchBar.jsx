@@ -24,14 +24,14 @@ function SearchBar() {
     useEffect(()=>{
         if (subjectId!==null&&subjectId!==undefined){
             chapterStore.getChapterList(subjectId)
-            //     .then(()=>{
-            //     const defaultChapterId=chapterStore.chapterList[0].chapterId
-            //     searchParams.set("chapterId",defaultChapterId)
-            //     setSearchParams(searchParams)
-            //     setChapterId(defaultChapterId)
+                // .then(()=>{
+                // const defaultChapterId=chapterStore.chapterList[0].chapterId
+                // searchParams.set("chapterId",defaultChapterId)
+                // setSearchParams(searchParams)
+                // setChapterId(defaultChapterId)
             // })
         }
-            handleChange({name:"chapterId",undefined});
+            // handleChange({name:"chapterId",undefined});
 
 
     },[subjectId])
@@ -92,9 +92,10 @@ function SearchBar() {
                         loading={chapterStore.isLoading}
                         placeholder={`选择章节`}
                         disabled={searchParams.get("subjectId")==null||subjectStore.isLoading||chapterStore.isLoading||questionStore.isLoading}
-                        defaultValue={
+                        // defaultValue={defaultChapterId}
+                        value={
                             searchParams.get("chapterId")?
-                            parseInt(searchParams.get("chapterId")):
+                            (searchParams.get("chapterId")):
                             undefined
                         }
                         options={

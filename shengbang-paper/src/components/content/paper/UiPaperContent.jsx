@@ -17,11 +17,9 @@ function UiPaperContent({questionList, indexItem,showAnswer}) {
                         <div className={`py-2 grid grid-cols-2 px-10 gap-1`}>
                             {Object.keys(questionList.questionOptions).map(option => {
                                 return (
-                                    <>
                                         <p key={option} className={`p-2`}>
                                             {option}、{questionList.questionOptions[option]}
                                         </p>
-                                    </>
                                 )
                             })}
                         </div>

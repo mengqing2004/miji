@@ -17,7 +17,7 @@ function Columns() {
                             {navList.map((item)=>(
                                 <li key={item.path}>
                                     <NavLink to={item.path}
-                                             className={({ isActive, isPending }) =>
+                                             className={({ isActive }) =>
                                                  `flex h-full hover:bg-gray-200 rounded-lg py-4 ${
                                                      isActive && `text-blue-500 bg-blue-50`
                                                  }`
@@ -27,7 +27,7 @@ function Columns() {
                                             `flex pl-6 text-xl items-center space-x-4 w-full h-full rounded-lg `
                                         }>
                                             {item.icon}
-                                            <p>{item.content}</p>
+                                            <p className={`text-sm`}>{item.content}</p>
                                         </li>
                                     </NavLink>
                                 </li>

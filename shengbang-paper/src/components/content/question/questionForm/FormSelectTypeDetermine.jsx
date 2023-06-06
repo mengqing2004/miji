@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useStore } from "@/store";
-import {Button, Form, Input, Select, Radio, Spin, message, Checkbox} from "antd";
-import { observer } from "mobx-react-lite";
+import React, {useEffect, useState} from "react";
+import {useStore} from "@/store";
+import {Button, Form, Input, message, Radio, Select, Spin} from "antd";
+import {observer} from "mobx-react-lite";
 import {QuestionDictionary} from '@/config'
 import {useParams} from "react-router-dom";
-const difficultKeys =Object.keys(QuestionDictionary.difficult);
+
+const difficultKeys = Object.keys(QuestionDictionary.difficult);
 
 const formLayout = {
     labelCol: {
@@ -22,51 +23,55 @@ const formLayout = {
 // 判断
 
 function FormSelectTypeDetermine() {
-    const {chapterId}=useParams()
-    const { questionStore } = useStore();
-    const { currentQuestionId } = questionStore.drawerConfig
+    const {chapterId} = useParams()
+    const {questionStore} = useStore();
+    const {currentQuestionId} = questionStore.drawerConfig
     const [formData, setFormData] = useState(null);
     const [, contextHolder] = message.useMessage();
 
-    useEffect(()=>{
-        if (currentQuestionId!==-1){
+    useEffect(() => {
+        if (currentQuestionId !== -1) {
             // 如果不等于-1,则是修改程序
-            questionStore.getQuestionDetail(currentQuestionId).then(()=>{
-                const {questionDetail}=questionStore;
+            questionStore.getQuestionDetail(currentQuestionId).then(() => {
+                const {questionDetail} = questionStore;
 
                 setFormData({
                     ...questionDetail,
-                    questionDifficuly:questionDetail.questionDifficuly+"",
-                    questionAnswer:questionDetail.questionAnswer[0],
+                    questionDifficulty: questionDetail.questionDifficulty + "",
+                    questionAnswer: questionDetail.questionAnswer[0],
                 })
             })
         }
 
-    },[])
+    }, [])
 
-    const onFinish=(values)=>{
-        const submitData={
-            ...values,
-            chapterId,
-            questionType: 3,
-            questionOptions: {
-                A:"正确",
-                B:"错误",
-            },
-            questionAnswer: [values.questionAnswer],
-        }
-        console.log(submitData)
+    const onFinish = (values) => {
+        if (values.questionName.trim()) {
+            const submitData = {
+                ...values,
+                chapterId,
+                questionType: 3,
+                questionOptions: {
+                    A: "正确",
+                    B: "错误",
+                },
+                questionAnswer: [values.questionAnswer],
+            }
+            console.log(submitData)
 
-        if (currentQuestionId !=-1){
-            submitData.questionId=currentQuestionId;
-            questionStore.putQuestion(submitData).then(()=>{
-                message.success("修改成功");
-            })
+            if (currentQuestionId != -1) {
+                submitData.questionId = currentQuestionId;
+                questionStore.putQuestion(submitData).then(() => {
+                    message.success("修改成功");
+                })
+            } else {
+                //     添加
+                questionStore.addQuestion(submitData).then(() => {
+                    message.success("添加成功")
+                })
+            }
         } else {
-            //     添加
-            questionStore.addQuestion(submitData).then(()=>{
-                message.success("添加成功")
-            })
+            message.error("题目不能为空")
         }
     }
     return (
@@ -74,7 +79,7 @@ function FormSelectTypeDetermine() {
             {contextHolder}
             {questionStore.isLoading ? (
                 <div className={`flex justify-center`}>
-                    <Spin tip={`加载题目详情`} />
+                    <Spin tip={`加载题目详情`}/>
                 </div>
             ) : (
                 <Form
@@ -115,7 +120,7 @@ function FormSelectTypeDetermine() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入题干" />
+                        <Input placeholder="请输入题干"/>
                     </Form.Item>
 
                     <Form.Item
@@ -138,7 +143,7 @@ function FormSelectTypeDetermine() {
                         name={`questionExplain`}
                         label={`答案解析`}
                     >
-                        <Input.TextArea allowClear showCount placeholder="请输入答案解析" />
+                        <Input.TextArea allowClear showCount placeholder="请输入答案解析"/>
                     </Form.Item>
 
                     <Form.Item>

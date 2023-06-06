@@ -1,7 +1,7 @@
 import {makeAutoObservable,runInAction} from "mobx";
 import {subjectApi} from "@/api";
 import {run} from "@/utils/index.js";
-
+import {useParams} from "react-router-dom";
 
 class SubjectStore{
     constructor() {
@@ -9,6 +9,7 @@ class SubjectStore{
     }
 
     subjectsList =[];
+    subjectName=undefined
     isLoading=false;
 
     //获取科目列表
@@ -73,6 +74,16 @@ class SubjectStore{
         console.log(subjectList)
 
         return run(this,subjectApi.sortSubject({subjectList}))
+    }
+
+    titleSubject(subjectId){
+        if (subjectId){
+            this.subjectsList.map(item=>{
+                if (parseInt(item.subjectId) === parseInt(subjectId)) {
+                   return  this.subjectName=item.subjectName
+                }
+            })
+        }
     }
 
 }

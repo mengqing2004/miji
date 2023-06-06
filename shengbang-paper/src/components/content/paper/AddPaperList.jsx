@@ -34,12 +34,12 @@ function AddPaperList() {
             message.error("请选择试卷所属科目", duration)
             return false;
         }
-        if (newPaperData.paperName.length === 0 ||newPaperData.paperName===''||newPaperData.paperName==null) {
+        if (newPaperData.paperName.length === 0 ||newPaperData.paperName===''||newPaperData.paperName==null||(newPaperData.paperName+'').trim()=="") {
             message.error("试卷名称不能为空", duration)
             return false;
         }
         if (newPaperData.questionList.length === 0) {
-            message.error("试卷题目不能为空", duration)
+            message.error("题目列表不能为空", duration)
             return false;
         }
 
@@ -170,7 +170,7 @@ function AddPaperList() {
                     </Descriptions.Item>
                     <Descriptions.Item label="试卷名称" span={3}>
                         <Input
-                            status={paperStore.newPaperData.paperName.length ? "" : "error"}
+                            status={paperStore.newPaperData.paperName.length&&(paperStore.newPaperData.paperName+'').trim()!=="" ? "" : "error"}
                             placeholder={`请输入试卷名称`}
                             value={paperStore.newPaperData.paperName}
                             onChange={(e) => {

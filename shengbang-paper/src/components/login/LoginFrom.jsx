@@ -55,7 +55,7 @@ function LoginFrom() {
                 onFinish={onFinish}
                 // onFinishFailed={onFinishFailed}
                 className="login-form"
-                initialValues={{ remember: true }}
+                // initialValues={{ remember: true }}
             >
             <Form.Item
                 name="username"
@@ -85,16 +85,16 @@ function LoginFrom() {
                 ]}>
                 <Input.Password  size="large" placeholder="请输入密码"  prefix={<LockOutlined />}/>
             </Form.Item>
-            <Form.Item>
-                <div className={`flex justify-between`}>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-                    {/*<a className="login-form-forgot  " href="#">*/}
-                    {/*    忘记密码*/}
-                    {/*</a>*/}
-                </div>
-            </Form.Item>
+            {/*<Form.Item>*/}
+            {/*    <div className={`flex justify-between`}>*/}
+            {/*        <Form.Item name="remember" valuePropName="checked" noStyle>*/}
+            {/*            <Checkbox>Remember me</Checkbox>*/}
+            {/*        </Form.Item>*/}
+            {/*        /!*<a className="login-form-forgot  " href="#">*!/*/}
+            {/*        /!*    忘记密码*!/*/}
+            {/*        /!*</a>*!/*/}
+            {/*    </div>*/}
+            {/*</Form.Item>*/}
             <Form.Item className="submit" shouldUpdate>
                 {()=>(
                     <Button

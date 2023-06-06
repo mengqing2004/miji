@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {Breadcrumb, Button, message, Popconfirm} from "antd";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {useStore} from "@/store/index.js";
 import UiDargTable from "@/components/UiDargTable.jsx";
 import {DeleteOutlined} from "@ant-design/icons";
@@ -16,16 +16,34 @@ import {observer} from "mobx-react-lite";
 
 function ChapterList() {
     const params = useParams();
+    let [searchParams, setSearchParams] = useSearchParams();
+
     const subjectId=params.subjectId || 0
 
     const {chapterStore}=useStore()
     const { chapterList, isLoading } = chapterStore;
+    // const {subjectStore} = useStore()
+
+    // subjectStore.titleSubject(params.subjectId)
+    const [subjectName, setSubjectName] = useState(searchParams.get("subjectName")||undefined)
     // const {chapterList,setChapterList}=useState([])
+
 
     useEffect(()=>{
         chapterStore.getChapterList(params.subjectId)
-    },[params,params.subjectId])
+        // subjectStore.titleSubject(params.subjectId)
+        setSubjectName(searchParams.get("subjectName")||undefined)
+        // setSubjectName(subjectStore.subjectName||undefined)
+        // subjectStore.subjectsList.map(item => {
+        //     if (parseInt(item.subjectId) === parseInt(subjectId)) {
+        //         setSubjectName(item.subjectName)
+        //     }
+        // })
+    },[params,params.subjectId,searchParams])
 
+    // useEffect(() => {
+    //
+    // }, [subjectId])
 
     //表头
     const columns = [
@@ -35,6 +53,7 @@ function ChapterList() {
         },
         {
             editable: true,
+            ellipsis: true,
             dataIndex: "chapterName",
             render: (text, record, index) => (
                 <p className={`flex-grow py-2`}>
@@ -108,9 +127,10 @@ function ChapterList() {
 
     };
     return (
-            <div className={`flex flex-col w-full -mt-8  space-y-5 h-full`}>
-                <div className={`text-right pr-4  -mt-5  flex-shrink-0`}>
-                    <CreateNewList navTitle={navTitle} newList={newList} params={params}  />
+            <div className={`flex flex-col w-full h-full`}>
+                <div className={`text-right  flex-shrink-0`}>
+                    <UiDargNav navTitle={navTitle} title={subjectName} newList={newList} params={params} isButton={true}/>
+                    {/*<CreateNewList navTitle={navTitle}   />*/}
                 </div>
                 <div className={`flex-grow h-full`}>
                     <UiScrollContent>

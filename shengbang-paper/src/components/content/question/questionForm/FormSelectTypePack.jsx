@@ -43,24 +43,30 @@ function FormSelectTypePack() {
     },[])
 
     const onFinish=(values)=>{
-        const submitData={
-            ...values,
-            chapterId,
-            questionType:4,
-            questionOptions:{A:''},
-            questionAnswer:[values.questionAnswer],
+        if (values.questionName.trim()&&values.questionAnswer.trim()) {
+            const submitData={
+                ...values,
+                chapterId,
+                questionType:4,
+                questionOptions:{A:''},
+                questionAnswer:[values.questionAnswer],
+            }
+
+            if (currentQuestionId!==-1){
+                submitData.questionId=currentQuestionId;
+                questionStore.putQuestion(submitData).then(()=>{
+                    message.success("修改成功")
+                })
+            }else {
+                questionStore.addQuestion(submitData).then(() => {
+                    message.success("添加成功");
+                });
+            }
+        }
+        else {
+            message.error("题目或答案不能为空")
         }
 
-        if (currentQuestionId!==-1){
-            submitData.questionId=currentQuestionId;
-            questionStore.putQuestion(submitData).then(()=>{
-                message.success("修改成功")
-            })
-        }else {
-            questionStore.addQuestion(submitData).then(() => {
-                message.success("添加成功");
-            });
-        }
     }
     return (
         <>

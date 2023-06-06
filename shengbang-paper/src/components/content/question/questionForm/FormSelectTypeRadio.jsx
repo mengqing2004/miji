@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useStore } from "@/store";
-import { Button, Form, Input, Select, Radio, Spin, message } from "antd";
-import { observer } from "mobx-react-lite";
+import React, {useEffect, useState} from "react";
+import {useStore} from "@/store";
+import {Button, Form, Input, message, Radio, Select, Spin} from "antd";
+import {observer} from "mobx-react-lite";
 import {QuestionDictionary} from '@/config'
 import {useParams} from "react-router-dom";
-const difficultKeys =Object.keys(QuestionDictionary.difficult);
+
+const difficultKeys = Object.keys(QuestionDictionary.difficult);
 
 const formLayout = {
     labelCol: {
@@ -21,73 +22,78 @@ const formLayout = {
 
 // 单选表单
 function FormSelectTypeRadio() {
-    const {chapterId}=useParams()
-    const { questionStore } = useStore();
-    const { currentQuestionId } = questionStore.drawerConfig
+    const {chapterId} = useParams()
+    const {questionStore} = useStore();
+    const {currentQuestionId} = questionStore.drawerConfig
     const [formData, setFormData] = useState(null);
     const [, contextHolder] = message.useMessage();
-    useEffect(()=>{
-        if (currentQuestionId!=-1){
+    useEffect(() => {
+        if (currentQuestionId !== -1) {
             // 如果不等于-1,则是修改程序
-            questionStore.getQuestionDetail(currentQuestionId).then(()=>{
-                const {questionDetail}=questionStore;
+            questionStore.getQuestionDetail(currentQuestionId).then(() => {
+                const {questionDetail} = questionStore;
 
                 setFormData({
                     ...questionDetail,
-                    questionDifficulty:questionDetail.questionDifficulty+"",
-                    optionA:questionDetail.questionOptions.A,
-                    optionB:questionDetail.questionOptions.B,
-                    optionC:questionDetail.questionOptions.C,
-                    optionD:questionDetail.questionOptions.D,
-                    questionAnswer:questionDetail.questionAnswer[0],
+                    questionDifficulty: questionDetail.questionDifficulty + "",
+                    optionA: questionDetail.questionOptions.A,
+                    optionB: questionDetail.questionOptions.B,
+                    optionC: questionDetail.questionOptions.C,
+                    optionD: questionDetail.questionOptions.D,
+                    questionAnswer: questionDetail.questionAnswer[0],
                 })
             })
         }
 
-    },[])
+    }, [])
 
-    const onFinish=(values)=>{
-        // console.log(values,'values',chapterId)
-        const submitData={
-            // ...values,
-            chapterId,
-            questionType:1,
-            questionOptions: {
-                A:values.optionA,
-                B:values.optionB,
-                C:values.optionC,
-                D:values.optionD,
-            },
-            questionAnswer: [values.questionAnswer],
-            questionDifficulty:parseInt(values.questionDifficulty),
-            questionExplain:values.questionExplain?values.questionExplain:null,
-            questionName:values.questionName,
-        }
-        console.log(submitData)
+    const onFinish = (values) => {
+        if (values.optionA.trim() && values.optionB.trim() && values.optionC.trim() && values.optionD.trim() && values.optionA.trim() && values.questionName.trim()) {
 
-        if (currentQuestionId != -1){
-            submitData.questionId=currentQuestionId;
-            // submitData.questionId=currentQuestionId.questionId;
-            // console.log(currentQuestionId,submitData.questionId)
-            questionStore.putQuestion(submitData).then(()=>{
-                message.success("修改成功");
-            })
+            // console.log(values,'values',chapterId)
+            const submitData = {
+                // ...values,
+                chapterId,
+                questionType: 1,
+                questionOptions: {
+                    A: values.optionA,
+                    B: values.optionB,
+                    C: values.optionC,
+                    D: values.optionD,
+                },
+                questionAnswer: [values.questionAnswer],
+                questionDifficulty: parseInt(values.questionDifficulty),
+                questionExplain: values.questionExplain ? values.questionExplain : null,
+                questionName: values.questionName,
+            }
+            console.log(submitData)
+
+            if (currentQuestionId != -1) {
+                submitData.questionId = currentQuestionId;
+                // submitData.questionId=currentQuestionId.questionId;
+                // console.log(currentQuestionId,submitData.questionId)
+                questionStore.putQuestion(submitData).then(() => {
+                    message.success("修改成功");
+                })
+            } else {
+                //     添加
+                questionStore.addQuestion(submitData).then(() => {
+                    message.success("添加成功")
+                })
+
+            }
         } else {
-        //     添加
-            questionStore.addQuestion(submitData).then(()=>{
-                message.success("添加成功")
-            })
-
+            message.error("题目或答案不能为空")
         }
     }
     return (
         <>
             {contextHolder}
-            {questionStore.isLoading?(
+            {questionStore.isLoading ? (
                 <div className={`flex justify-center`}>
-                    <Spin tip={'加载题目详情'} />
+                    <Spin tip={'加载题目详情'}/>
                 </div>
-            ):(
+            ) : (
                 <Form
                     {...formLayout}
                     autoComplete="off"
@@ -126,7 +132,7 @@ function FormSelectTypeRadio() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入题干" />
+                        <Input placeholder="请输入题干"/>
                     </Form.Item>
 
                     <Form.Item
@@ -139,7 +145,7 @@ function FormSelectTypeRadio() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入选项A" />
+                        <Input placeholder="请输入选项A"/>
                     </Form.Item>
 
                     <Form.Item
@@ -152,7 +158,7 @@ function FormSelectTypeRadio() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入选项B" />
+                        <Input placeholder="请输入选项B"/>
                     </Form.Item>
 
                     <Form.Item
@@ -165,7 +171,7 @@ function FormSelectTypeRadio() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入选项C" />
+                        <Input placeholder="请输入选项C"/>
                     </Form.Item>
 
                     <Form.Item
@@ -178,7 +184,7 @@ function FormSelectTypeRadio() {
                             },
                         ]}
                     >
-                        <Input placeholder="请输入选项D" />
+                        <Input placeholder="请输入选项D"/>
                     </Form.Item>
 
                     <Form.Item
@@ -203,7 +209,7 @@ function FormSelectTypeRadio() {
                         name={`questionExplain`}
                         label={`答案解析`}
                     >
-                        <Input.TextArea allowClear showCount placeholder="请输入答案解析" />
+                        <Input.TextArea allowClear showCount placeholder="请输入答案解析"/>
                     </Form.Item>
 
                     <Form.Item>

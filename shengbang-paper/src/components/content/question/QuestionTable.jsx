@@ -122,16 +122,14 @@ function QuestionTable() {
                 // scroll={{
                 //     y:620
                 // }}
-                pagination={{
-                    position: ["none", "none"],
-                }}
+                pagination={false}
                 rowKey={"questionId"}
                 columns={columns({onDelete,onEdit})}
                 expandable={{
                     expandedRowRender: (record) => (
                         <>
                             {/*<QuestionTableList questionsId={record.questionId}/>*/}
-                            <TableDetail questionsId={record.questionId}/>
+                            <TableDetail questionId={record.questionId}/>
                         </>
                    ),
                     rowExpandable: (record) => record.name !== 'Not Expandable',

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Spin } from "antd";
 import UseQuestionListData from "@/hooks/useQuestionListData.js";
+import {useStore} from "@/store/index.js";
+import {observer} from "mobx-react-lite";
 export const ShowDetailFromType=({data})=>{
     return(
         <>
@@ -44,17 +46,22 @@ export const ShowDetailFromType=({data})=>{
     )
 }
 
-function TableDetail({questionsId}) {
-    const {questionList,loading}=UseQuestionListData(questionsId)
+function TableDetail({questionId}) {
+    console.log(questionId)
+    const {questionStore}=useStore()
+    useEffect(()=>{
+        questionStore.getQuestionDetailList(questionId)
+    },[questionId])
+    // const {questionList,loading}=UseQuestionListData(questionsId)
     return (
         <div className={`px-2 text-xs`}>
-            {loading?(
-                <Spin tip={'加载题目详情'}/>
+            {questionStore.questionDetailList[questionId]?(
+                    <ShowDetailFromType data={questionStore.questionDetailList[questionId]}/>
             ):
-                <ShowDetailFromType data={questionList}/>
+                <Spin tip={'加载题目详情'}/>
             }
         </div>
     );
 }
 
-export default TableDetail;
+export default observer(TableDetail);

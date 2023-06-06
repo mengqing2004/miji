@@ -94,9 +94,7 @@ function PaperTable() {
     return (
         <div>
             <Table
-                pagination={{
-                    position: ["none", "none"],
-                }}
+                pagination={false}
                 rowKey={"paperId"}
                 columns={columns({onDelete, onEdit, onDownload})}
                 dataSource={paperList}

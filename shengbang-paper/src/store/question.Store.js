@@ -17,6 +17,8 @@ class QuestionStore{
     questionDifficulty=undefined
     questionList=[]
     questionDetail={}
+
+    questionDetailList={}
     //管理抽屉的变量
     drawerConfig = defaultDrawerConfig;
     questionRanDomList=[]
@@ -55,6 +57,19 @@ class QuestionStore{
                 runInAction(()=>{
                     console.log(res,'resssss')
                     this.questionDetail=res.data;
+                })
+                return res;
+            })
+    }
+
+    //详情列表 更新后刷新内容
+    getQuestionDetailList(questionId){
+        console.log(questionId,'1111111111')
+        return run(this,this.getQuestionDetail(questionId))
+            .then((res)=>{
+                runInAction(()=>{
+                    console.log(res,'resssss')
+                    this.questionDetailList[questionId]=res.data;
                 })
                 return res;
             })
@@ -105,7 +120,8 @@ class QuestionStore{
             };
 
             this.getQuestionList(searchParam)
-            // this.questionDetail(params.questionId)
+            console.log(data.questionId)
+            this.getQuestionDetailList(data.questionId)
         })
     }
 

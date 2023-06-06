@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Radio } from 'antd';
+import {Button, Form, Input, message, Modal, Radio} from 'antd';
 import { useState } from 'react';
 import useAsync from "@/hooks/useAsync.js";
 
@@ -63,9 +63,16 @@ const App = ( {navTitle,newList}) => {
         // else {
         //     console.log(navTitle,'添加失败','无有效api')
         // }
-        newList(values.title)
         // console.log('Received values of form: ', values);
-        setOpen(false);
+        if ((values.title+'').trim()==""){
+            console.log(values,'values+688888888')
+            console.log((values),'112233')
+            message.error("不能为空")
+        }else {
+            newList(values.title)
+            setOpen(false);
+        }
+
     };
     return (
         <div>
