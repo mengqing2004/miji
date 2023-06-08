@@ -23,12 +23,12 @@ function Columns() {
                                                  }`
                                              }
                                     >
-                                        <li className={
+                                        <div className={
                                             `flex pl-6 text-xl items-center space-x-4 w-full h-full rounded-lg `
                                         }>
                                             {item.icon}
                                             <p className={`text-sm`}>{item.content}</p>
-                                        </li>
+                                        </div>
                                     </NavLink>
                                 </li>
 
